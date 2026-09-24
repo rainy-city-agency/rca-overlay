@@ -13,6 +13,11 @@
   align-items: start;
 }
 
+.split-right-1.contact-card,
+.w-form.contact-card {
+  overflow: hidden;
+}
+
 .contact-card {
   position: relative;
   perspective: 1200px;

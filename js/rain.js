@@ -116,6 +116,7 @@
   function loadImage(src) {
     return new Promise(function (resolve, reject) {
       var img = new Image();
+      img.crossOrigin = "anonymous";
       img.onload = function () { resolve(img); };
       img.onerror = reject;
       img.src = src;

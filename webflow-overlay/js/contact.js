@@ -1,6 +1,97 @@
 (function () {
-  var form = document.querySelector("[data-contact-fx]");
+  var hook = document.querySelector("[data-contact-fx]");
+  var form = hook && hook.tagName === "FORM" ? hook : hook && hook.querySelector("form");
+  if (!form) form = document.querySelector("form.contact-form, .w-form form, form");
   if (!form) return;
+
+  function enhance(form) {
+    form.classList.add("contact-form");
+    var wrap = form.closest(".split-right-1, .w-form, .contact-card") || form.parentElement;
+    if (wrap) {
+      wrap.classList.add("contact-card");
+      wrap.classList.add("contact-card-face");
+      if (!wrap.querySelector(":scope > .contact-card-glow")) {
+        var glow = document.createElement("div");
+        glow.className = "contact-card-glow";
+        glow.setAttribute("aria-hidden", "true");
+        wrap.insertBefore(glow, wrap.firstChild);
+      }
+      if (!wrap.querySelector(".contact-progress")) {
+        var progress = document.createElement("div");
+        progress.className = "contact-progress";
+        progress.setAttribute("role", "progressbar");
+        progress.setAttribute("aria-valuemin", "0");
+        progress.setAttribute("aria-valuemax", "100");
+        progress.setAttribute("aria-valuenow", "0");
+        progress.innerHTML = '<span class="contact-progress-bar"></span>';
+        wrap.insertBefore(progress, form);
+      }
+      if (!wrap.querySelector(".contact-burst")) {
+        var burstLayer = document.createElement("div");
+        burstLayer.className = "contact-burst";
+        burstLayer.setAttribute("aria-hidden", "true");
+        wrap.appendChild(burstLayer);
+      }
+    }
+
+    var tick = '<span class="contact-tick" aria-hidden="true"><svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 11.5 9.5 14.5 15.5 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="contact-line" aria-hidden="true"></span>';
+    Array.prototype.forEach.call(form.querySelectorAll("input, textarea, select"), function (input) {
+      if (input.type === "submit" || input.type === "hidden" || input.type === "checkbox") return;
+      var field = input.closest(".form-field, .contact-field, fieldset") || input.parentElement;
+      if (!field || field === form) return;
+      field.classList.add("contact-field");
+      if (input.tagName === "TEXTAREA") input.classList.add("contact-area", "contact-input");
+      else if (input.tagName !== "SELECT") input.classList.add("contact-input");
+      if (input.tagName !== "SELECT" && !field.querySelector(".contact-tick")) {
+        input.insertAdjacentHTML("afterend", tick);
+      }
+    });
+
+    var submitBtn = form.querySelector('[type="submit"], .form-submit, .w-button');
+    if (submitBtn) {
+      submitBtn.classList.add("contact-submit", "form-submit");
+      if (submitBtn.tagName !== "INPUT" && !submitBtn.querySelector(".contact-submit-text")) {
+        var label = (submitBtn.textContent || "Start the conversation").trim();
+        submitBtn.innerHTML =
+          '<span class="contact-submit-text"></span><span class="contact-submit-wait"><span class="contact-drops" aria-hidden="true"><i></i><i></i><i></i></span> Sending</span>';
+        submitBtn.querySelector(".contact-submit-text").textContent = label;
+      }
+    }
+
+    var needSelect =
+      form.querySelector("#contact-need, [name='Looking-For'], [data-name='Looking-For']") ||
+      form.querySelector("select");
+    if (needSelect && !form.querySelector(".contact-chips")) {
+      var group = needSelect.closest("fieldset, .form-field, .contact-field") || needSelect.parentElement;
+      var chips = document.createElement("div");
+      chips.className = "contact-chips";
+      chips.setAttribute("role", "group");
+      chips.setAttribute("aria-label", "Project type");
+      chips.innerHTML = '<span class="contact-chip-pill" aria-hidden="true"></span>';
+      Array.prototype.forEach.call(needSelect.options, function (opt) {
+        if (!opt.value) return;
+        var chip = document.createElement("button");
+        chip.className = "contact-chip";
+        chip.type = "button";
+        chip.setAttribute("data-need", opt.value);
+        chip.setAttribute("aria-pressed", "false");
+        chip.textContent = opt.textContent;
+        chips.appendChild(chip);
+      });
+      group.appendChild(chips);
+      needSelect.classList.add("looking-for-select");
+    }
+
+    if (!form.querySelector(".contact-status")) {
+      var status = document.createElement("p");
+      status.className = "contact-status";
+      status.innerHTML = '<span class="contact-status-dot" aria-hidden="true"></span><span class="contact-status-text">Awaiting your note.</span>';
+      if (submitBtn) form.insertBefore(status, submitBtn);
+      else form.appendChild(status);
+    }
+  }
+
+  enhance(form);
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -12,7 +103,7 @@
     return null;
   }
 
-  var card = document.querySelector(".contact-card") || form.closest(".split-right-1");
+  var card = document.querySelector(".contact-card") || form.closest(".split-right-1, .w-form");
   var face = document.querySelector(".contact-card-face") || card;
   var bar = document.querySelector(".contact-progress");
   var chipsWrap = document.querySelector(".contact-chips");
@@ -93,7 +184,7 @@
     });
   }
 
-  if (reduce || !card) {
+  if (reduce || !card || !card.hasAttribute("data-reveal")) {
     armFields();
   } else {
     var tryArm = function () {
