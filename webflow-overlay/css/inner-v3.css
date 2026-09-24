@@ -72,8 +72,8 @@
   --btn-fill: var(--brand--complement);
   --btn-rest: transparent;
   --btn-ink: var(--brand--complement);
-  --btn-hover-ink: var(--brand--complement);
-  --btn-wipe: #fff;
+  --btn-hover-ink: var(--text--inverse);
+  --btn-wipe: var(--brand--complement);
   background-color: var(--btn-rest);
   background-image: linear-gradient(var(--btn-wipe), var(--btn-wipe));
   background-repeat: no-repeat;
@@ -125,13 +125,12 @@
 .mcta-btn-outline:hover,
 .mcta-btn-outline:focus-visible,
 .btn.btn-secondary:hover,
-.btn.btn-secondary:focus-visible {
-  --btn-fill: var(--brand--complement);
-  --btn-rest: transparent;
-  --btn-hover-ink: var(--brand--complement);
+.btn.btn-secondary:focus-visible,
+.button:hover:where(.w-variant-ff0172b9-32a1-f282-79dd-9582fff70183),
+.button:focus-visible:where(.w-variant-ff0172b9-32a1-f282-79dd-9582fff70183) {
   background-color: transparent;
   background-size: 100% 100%;
-  color: var(--brand--complement);
+  color: #fff;
   border-color: var(--brand--complement);
   box-shadow: inset 0 0 0 2px var(--brand--complement);
 }
@@ -382,14 +381,18 @@ html:not([data-wf-page="6a0ed15ae72ebfcd1bcbad35"]) .hero:not(:has(.hero-gradien
   transform: translateY(18px);
 }
 
-.post-article [data-reveal="copy"] {
+.post-article [data-reveal="copy"],
+.post-body [data-reveal="copy"],
+.post-article .w-richtext [data-reveal="copy"] {
   opacity: 0;
   filter: blur(14px);
   transform: translateY(22px);
   transition: none;
 }
 
-.post-article [data-reveal="copy"].is-in {
+.post-article [data-reveal="copy"].is-in,
+.post-body [data-reveal="copy"].is-in,
+.post-article .w-richtext [data-reveal="copy"].is-in {
   animation: hero-motion-blur-soft 1.35s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: var(--reveal-delay, 0ms);
 }
@@ -818,6 +821,7 @@ html:not([data-wf-page="6a0ed15ae72ebfcd1bcbad35"]) .hero:not(:has(.hero-gradien
   .inner-lede,
   .hero-blur-word-inner,
   .post-article [data-reveal="copy"],
+  .post-body [data-reveal="copy"],
   .splt-pane:not(.splt-pane-hidden) .splt-pane-head,
   .splt-pane:not(.splt-pane-hidden) .splt-tag,
   .splt-pane:not(.splt-pane-hidden) .splt-btn,
