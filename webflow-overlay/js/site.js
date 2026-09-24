@@ -161,6 +161,15 @@
     });
   });
 
+  document.querySelectorAll(".post-article").forEach(function (article) {
+    article.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, .post-p, .post-h2, .post-h3").forEach(function (el) {
+      if (el.closest(".post-nav, .button, a.w-button")) return;
+      if (skipReveal(el) || el.hasAttribute("data-reveal")) return;
+      if (!el.textContent || !el.textContent.trim()) return;
+      el.setAttribute("data-reveal", "copy");
+    });
+  });
+
   function siblingRevealIndex(el) {
     var i = 0;
     var prev = el.previousElementSibling;

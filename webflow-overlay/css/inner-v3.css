@@ -375,6 +375,18 @@ html:not([data-wf-page="6a0ed15ae72ebfcd1bcbad35"]) .hero:not(:has(.hero-gradien
   transform: translateY(18px);
 }
 
+.post-article [data-reveal="copy"] {
+  opacity: 0;
+  filter: blur(14px);
+  transform: translateY(22px);
+  transition: none;
+}
+
+.post-article [data-reveal="copy"].is-in {
+  animation: hero-motion-blur-soft 1.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
 .hero .image-7[data-reveal],
 .hero-visual-1[data-reveal] {
   transform: translateY(28px) scale(0.97);
@@ -798,6 +810,7 @@ html:not([data-wf-page="6a0ed15ae72ebfcd1bcbad35"]) .hero:not(:has(.hero-gradien
   .insights-hero-intro,
   .inner-lede,
   .hero-blur-word-inner,
+  .post-article [data-reveal="copy"],
   .splt-pane:not(.splt-pane-hidden) .splt-pane-head,
   .splt-pane:not(.splt-pane-hidden) .splt-tag,
   .splt-pane:not(.splt-pane-hidden) .splt-btn,
