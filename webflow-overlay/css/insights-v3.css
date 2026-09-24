@@ -1,0 +1,190 @@
+/* Insights listing — sits on top of rca-2026.webflow.css and homepage-v3.css. */
+
+.page-insights {
+  background-color: var(--bg--primary);
+  color: var(--text--primary);
+  overflow-x: hidden;
+}
+
+.page-insights .nav-link.is-current {
+  color: var(--brand--complement);
+}
+
+.page-insights .insights-hero {
+  background-color: #e2edf1;
+  padding: 160px var(--grid--margin-desktop) 56px;
+}
+
+.page-insights .insights-hero-bg {
+  display: none;
+}
+
+.page-insights .insights-hero-title {
+  font-size: clamp(56px, 8vw, 84px);
+}
+
+.page-insights .insights-hero-title-block {
+  z-index: 1;
+}
+
+.page-insights .insights-wrap {
+  max-width: 1344px;
+  margin: 0 auto;
+  padding: 50px var(--grid--margin-desktop) 96px;
+}
+
+.page-insights .insights-filter-bar {
+  padding: 0 0 32px;
+  gap: 8px;
+}
+
+.page-insights .insights-chip {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  margin: 0;
+  font: inherit;
+  color: var(--text--secondary);
+  background-color: #fff;
+  border: 1px solid var(--border--default);
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.page-insights .insights-chip:first-child {
+  color: var(--text--secondary);
+  background-color: #fff;
+  border-color: var(--border--default);
+}
+
+.page-insights .insights-chip:hover {
+  border-color: var(--brand--primary);
+  color: var(--brand--primary);
+}
+
+.page-insights .insights-chip.is-active,
+.page-insights .insights-chip.is-active:hover {
+  color: var(--text--inverse);
+  background-color: var(--brand--primary);
+  border-color: var(--brand--primary);
+}
+
+.page-insights .insights-chip:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--brand--primary);
+}
+
+.page-insights .insights-featured {
+  margin-top: 0;
+  margin-bottom: 24px;
+  padding: 0;
+  aspect-ratio: 2.1 / 1;
+  border-radius: 24px;
+  box-shadow: 0 2px 8px #0a0f1a0d;
+}
+
+.page-insights .insights-featured .work-card-panel {
+  margin: 20px;
+  max-width: 720px;
+}
+
+.page-insights .insights-featured-title {
+  font-size: clamp(32px, 4vw, 56px);
+}
+
+.page-insights .insights-excerpt {
+  margin: 0;
+  font-family: var(--font--dm-mono);
+  color: var(--text--secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.page-insights .insights-grid {
+  padding: 0;
+  gap: 24px;
+}
+
+.page-insights .insights-featured,
+.page-insights .insights-grid .work-card {
+  width: 100%;
+  flex: none;
+}
+
+.page-insights .insights-grid .work-card {
+  aspect-ratio: 4 / 3;
+}
+
+.page-insights .insights-empty {
+  display: none;
+  margin: 48px 0 0;
+  font-family: var(--font--dm-mono);
+  color: var(--text--secondary);
+  font-size: 14px;
+}
+
+.page-insights.is-empty .insights-empty {
+  display: block;
+}
+
+.page-insights .insights-featured.is-hidden,
+.page-insights .insights-grid .work-card.is-hidden {
+  display: none;
+}
+
+.page-insights .insights-featured[data-reveal],
+.page-insights .insights-grid .work-card[data-reveal] {
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  @media (prefers-reduced-motion: no-preference) {
+    .page-insights .insights-featured:hover {
+      z-index: 2;
+      transform: translateY(-12px);
+      box-shadow: 0 18px 40px #0a0f1a1f, 0 4px 12px #0a0f1a12;
+    }
+
+    .page-insights .insights-featured:hover .work-card-img {
+      transform: scale(1.06);
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .page-insights .insights-hero,
+  .page-insights .insights-wrap {
+    padding-left: var(--grid--margin-mobile);
+    padding-right: var(--grid--margin-mobile);
+  }
+
+  .page-insights .insights-hero {
+    padding-top: 128px;
+  }
+
+  .page-insights .insights-featured {
+    aspect-ratio: 4 / 3;
+  }
+
+  .page-insights .insights-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .page-insights .insights-filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 16px;
+    scrollbar-width: none;
+  }
+
+  .page-insights .insights-filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .page-insights .insights-featured-title {
+    font-size: 28px;
+  }
+}

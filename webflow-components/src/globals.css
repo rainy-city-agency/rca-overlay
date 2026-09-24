@@ -1,0 +1,10 @@
+/* Component styles render inside a Shadow DOM, so page-level rules do not reach
+   them. Custom properties do inherit through the boundary, which is why the
+   components below reference the site's --brand--*, --text--* and --font--*
+   tokens directly, each with the exported value as a fallback. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
