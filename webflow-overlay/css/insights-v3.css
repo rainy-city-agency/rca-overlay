@@ -16,8 +16,7 @@
 }
 
 .page-insights .insights-hero-bg {
-  display: block;
-  z-index: 0;
+  display: none;
 }
 
 .page-insights .insights-hero-title {
@@ -132,14 +131,12 @@
   display: none;
 }
 
-/* FADE-UP — comment back in to restore
 .page-insights .insights-featured[data-reveal],
 .page-insights .insights-grid .work-card[data-reveal] {
   transition:
     opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
     transform 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
 }
-*/
 
 @media (hover: hover) and (pointer: fine) {
   @media (prefers-reduced-motion: no-preference) {

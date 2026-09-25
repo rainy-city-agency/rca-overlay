@@ -151,10 +151,9 @@ html {
   left: -10%;
   width: 70vw;
   height: 70vw;
-  background: var(--organic-c1, #dbeafe);
+  background: #dbeafe;
   opacity: 0.95;
   animation: hp-organic-1 12s ease-in-out infinite;
-  animation-delay: var(--organic-d1, 0s);
 }
 
 .hp-organic-blob-2 {
@@ -162,10 +161,9 @@ html {
   right: -10%;
   width: 65vw;
   height: 65vw;
-  background: var(--organic-c2, #eff6ff);
+  background: #eff6ff;
   opacity: 0.9;
   animation: hp-organic-2 16s ease-in-out infinite;
-  animation-delay: var(--organic-d2, 0s);
 }
 
 .hp-organic-blob-3 {
@@ -173,10 +171,9 @@ html {
   left: 28%;
   width: 58vw;
   height: 58vw;
-  background: var(--organic-c3, #bfdbfe);
+  background: #bfdbfe;
   opacity: 0.8;
   animation: hp-organic-3 20s ease-in-out infinite;
-  animation-delay: var(--organic-d3, 0s);
 }
 
 @keyframes hp-organic-1 {
@@ -675,7 +672,6 @@ html {
   transform: none;
 }
 
-/* FADE-UP — comment back in to restore
 .page-home .splt-pane.is-active .splt-pane-head {
   animation: splt-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -691,7 +687,6 @@ html {
 .page-home .splt-pane.is-active .splt-btn {
   animation: splt-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.24s both;
 }
-*/
 
 .page-home .splt-phone {
   transition: transform 0.7s cubic-bezier(0.22, 1.15, 0.32, 1);
@@ -716,7 +711,6 @@ html {
   }
 }
 
-/* FADE-UP — comment back in to restore
 @keyframes splt-rise {
   from {
     opacity: 0;
@@ -727,7 +721,6 @@ html {
     transform: none;
   }
 }
-*/
 
 @media (prefers-reduced-motion: reduce) {
   .page-home .splt-tab-pill,

@@ -34,149 +34,13 @@
     });
   });
 
-  (function paintOrganicGradients() {
-    var SKIP = ".footer, .nav-fixed, .nav-bar, .w-nav, .button, .btn, .hero-gradient-bottom, .hero-gradient-top, .insights-fade, .insights-filter-fade, .mproc-tabs-fade, .staff-photo-grad, .grain-overlay, .rain-canvas, .contact-card-glow, .contact-progress, .hp-organic";
-    var FALLBACK = [
-      ".platforms-section",
-      ".hero-section",
-      ".ships-section",
-      ".insights-hero",
-      ".post-hero",
-      ".contact-hero",
-      ".cs-hero",
-      ".cs-stats",
-      ".cs-solution",
-      ".about-hero",
-      ".about-platinum",
-      ".quarter-section",
-      ".process-section-1",
-      ".mproc-section",
-      ".story-section",
-      ".location-section",
-      ".background-animation"
-    ].join(", ");
-    var DEFAULTS = ["#dbeafe", "#eff6ff", "#f5d6cf"];
-
-    function skip(el) {
-      return !el || el.nodeType !== 1 || el.matches(SKIP) || el.closest(SKIP);
-    }
-
-    function gradientImage(el) {
-      if (!el) return "";
-      var img = window.getComputedStyle(el).backgroundImage || "";
-      return /gradient/i.test(img) && img !== "none" ? img : "";
-    }
-
-    function extractColors(image) {
-      var found = image.match(/#(?:[0-9a-fA-F]{3,8})\b|rgba?\([^)]+\)|hsla?\([^)]+\)/g) || [];
-      var colors = [];
-      found.forEach(function (color) {
-        if (/rgba?\([^)]*,\s*0(?:\.0+)?\s*\)/.test(color)) return;
-        if (/#(?:[0-9a-fA-F]{3,6})00\b/.test(color)) return;
-        if (colors.indexOf(color) === -1) colors.push(color);
-      });
-      return colors;
-    }
-
-    function applyColors(layer, colors, index) {
-      var c1 = colors[0] || DEFAULTS[0];
-      var c2 = colors[1] || colors[0] || DEFAULTS[1];
-      var c3 = colors[2] || colors[0] || DEFAULTS[2];
-      layer.style.setProperty("--organic-c1", c1);
-      layer.style.setProperty("--organic-c2", c2);
-      layer.style.setProperty("--organic-c3", c3);
-      layer.style.setProperty("--organic-d1", (index % 5) * -1.4 + "s");
-      layer.style.setProperty("--organic-d2", ((index + 2) % 7) * -1.6 + "s");
-      layer.style.setProperty("--organic-d3", ((index + 4) % 9) * -1.8 + "s");
-    }
-
-    function isVisibleBox(el) {
-      if (!el) return false;
-      var style = window.getComputedStyle(el);
-      if (style.display === "none" || style.visibility === "hidden" || style.opacity === "0") return false;
-      var box = el.getBoundingClientRect();
-      return box.width >= 180 && box.height >= 90;
-    }
-
-    function pickHost(root) {
-      if (skip(root)) return null;
-      if (root.matches("[class$='-bg']") && root.parentElement) {
-        root = root.parentElement;
-        if (skip(root)) return null;
-      }
-      if (root.querySelector(":scope > .hp-organic")) return root;
-
-      var kids = root.querySelectorAll(":scope > [class$='-bg'], :scope > .process-panel, :scope > .mproc-panel, :scope > .quarter-bg");
-      for (var i = 0; i < kids.length; i += 1) {
-        if (!skip(kids[i]) && gradientImage(kids[i])) return root;
-      }
-
-      if (gradientImage(root) || root.matches(FALLBACK)) return root;
-
-      var nested = root.querySelector(".process-panel, .mproc-panel, .quarter-bg, .story-bg, .location-bg, .stats-bg, .about-platinum-bg, .cs-hero-bg, .cs-stats-panel");
-      if (nested && !skip(nested) && gradientImage(nested)) {
-        return isVisibleBox(nested) ? nested : root;
-      }
-
-      return null;
-    }
-
-    function mount(host, colors, index) {
-      if (!host) return;
-      var existing = host.querySelector(":scope > .hp-organic");
-      if (existing) {
-        host.setAttribute("data-organic-host", "");
-        applyColors(existing, colors, index);
-        return;
-      }
-      if (!isVisibleBox(host) && !host.matches(FALLBACK) && !host.matches(".hero, .cs-hero, .insights-hero, .post-hero, .contact-hero")) return;
-
-      var layer = document.createElement("div");
-      layer.className = "hp-organic";
-      layer.setAttribute("aria-hidden", "true");
-      layer.innerHTML =
-        '<div class="hp-organic-blob hp-organic-blob-1"></div>' +
-        '<div class="hp-organic-blob hp-organic-blob-2"></div>' +
-        '<div class="hp-organic-blob hp-organic-blob-3"></div>';
-      applyColors(layer, colors, index);
-      host.setAttribute("data-organic-host", "");
-      host.insertBefore(layer, host.firstChild);
-    }
-
-    var hosts = [];
-    document.querySelectorAll("section, [class*='-section'], [class*='-hero'], .background-animation").forEach(function (root) {
-      var host = pickHost(root);
-      if (!host || hosts.indexOf(host) !== -1) return;
-      hosts.push(host);
-    });
-
-    hosts.forEach(function (host, index) {
-      var image = gradientImage(host);
-      if (!image) {
-        var bg = host.querySelector(":scope > [class$='-bg'], :scope > .quarter-bg, :scope > .process-panel, :scope > .mproc-panel");
-        if (bg) image = gradientImage(bg);
-      }
-      if (!image && host.parentElement) image = gradientImage(host.parentElement);
-      mount(host, extractColors(image), index);
-    });
-
-    document.querySelectorAll(".hp-organic").forEach(function (layer, index) {
-      if (layer.style.getPropertyValue("--organic-c1")) return;
-      var host = layer.parentElement;
-      var source = host && (host.querySelector(":scope > [class$='-bg']") || host);
-      applyColors(layer, extractColors(gradientImage(source) || gradientImage(host)), index);
-    });
-  })();
-
   function armReveal(el, delay) {
     if (delay) el.style.setProperty("--reveal-delay", delay);
     el.classList.add("is-in");
   }
 
   function skipReveal(el) {
-    if (el.closest(".footer, .nav-fixed, .nav-bar, .w-nav, .splt-pane-hidden, .w-dyn-empty, .card-stack")) return true;
-    if (el.closest(".post-article") && !el.matches(".post-article")) return true;
-    return false;
+    return !!(el.closest(".footer, .nav-fixed, .nav-bar, .w-nav, .splt-pane-hidden, .w-dyn-empty, .card-stack"));
   }
 
   var extraReveal = [
@@ -230,14 +94,12 @@
     ".work-card"
   ];
 
-  /* FADE-UP — comment back in to restore
   extraReveal.forEach(function (selector) {
     document.querySelectorAll(selector).forEach(function (el) {
       if (skipReveal(el) || el.hasAttribute("data-reveal")) return;
       el.setAttribute("data-reveal", "");
     });
   });
-  */
 
   var textReveal = [
     "h1",
@@ -286,20 +148,18 @@
 
   function skipTextReveal(el) {
     if (skipReveal(el) || el.hasAttribute("data-reveal")) return true;
-    if (el.closest(".post-article, .faq-item, .platform-card, .yellow-card, .quarter-card, .inc-tag, .benefit-item, .work-card, .process-step, .form-field, .contact-field, .contact-need, label, .form-label, .button, .nav-link, .stat-cell, .story-stat, .hero-content, .hero-content-1, .contact-hero-content, .insights-hero-title-block, .inner-hero-copy")) {
+    if (el.closest(".faq-item, .platform-card, .yellow-card, .quarter-card, .inc-tag, .benefit-item, .work-card, .process-step, .form-field, .contact-field, .contact-need, label, .form-label, .button, .nav-link, .stat-cell, .story-stat, .hero-content, .hero-content-1, .contact-hero-content, .insights-hero-title-block, .inner-hero-copy")) {
       return true;
     }
     return false;
   }
 
-  /* FADE-UP — comment back in to restore
   textReveal.forEach(function (selector) {
     document.querySelectorAll(selector).forEach(function (el) {
       if (skipTextReveal(el)) return;
       el.setAttribute("data-reveal", "copy");
     });
   });
-  */
 
   function siblingRevealIndex(el) {
     var i = 0;
@@ -331,10 +191,14 @@
   }
 
   function tagArticleCopy() {
-    document.querySelectorAll(".post-article").forEach(function (article) {
-      if (article.hasAttribute("data-reveal")) return;
-      article.setAttribute("data-reveal", "article");
-      observeReveal(article);
+    document.querySelectorAll(".post-article, .post-body, .post-article .w-richtext").forEach(function (root) {
+      root.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, blockquote, figcaption, .post-p, .post-h2, .post-h3").forEach(function (el) {
+        if (el.closest(".post-nav, .button, a.w-button, .footer, .nav-fixed")) return;
+        if (el.hasAttribute("data-reveal")) return;
+        if (!el.textContent || !el.textContent.trim()) return;
+        el.setAttribute("data-reveal", "copy");
+        observeReveal(el);
+      });
     });
   }
 
@@ -342,11 +206,9 @@
     document.querySelectorAll(selector).forEach(observeReveal);
   }
 
-  /* FADE-UP — comment back in to restore
   tagArticleCopy();
   revealAll("[data-reveal]");
   window.setTimeout(tagArticleCopy, 400);
-  */
 
   var chips = document.querySelectorAll(".insights-chip");
   var featured = document.querySelector(".insights-featured");
@@ -527,7 +389,6 @@
     watch.observe(card, { attributes: true, attributeFilter: ["class"] });
   });
 
-  /* TEXT MOTION BLUR — comment back in to restore
   function splitHeroBlurTitle(title) {
     if (title.getAttribute("data-hero-blur") === "1") return;
     title.setAttribute("data-hero-blur", "1");
@@ -571,83 +432,4 @@
       ".hero .heading-1, .hero-h1-1, .contact-hero-title, .insights-hero-title, .inner-title"
     ).forEach(splitHeroBlurTitle);
   }
-  */
-
-  (function tickerStats() {
-    function buildTicker(el) {
-      var raw = (el.textContent || "").replace(/\s+/g, " ").trim();
-      if (!raw || el.getAttribute("data-ticker") === "1") return false;
-      el.setAttribute("data-ticker", "1");
-      el.setAttribute("aria-label", raw);
-      el.textContent = "";
-
-      var wrap = document.createElement("span");
-      wrap.className = "cs-ticker";
-      wrap.setAttribute("aria-hidden", "true");
-
-      raw.split("").forEach(function (ch) {
-        if (/\d/.test(ch)) {
-          var digit = document.createElement("span");
-          digit.className = "cs-ticker-digit";
-          var reel = document.createElement("span");
-          reel.className = "cs-ticker-reel";
-          reel.setAttribute("data-digit", ch);
-          var html = "";
-          var i;
-          for (i = 0; i < 10; i += 1) html += "<span>" + i + "</span>";
-          for (i = 0; i < 10; i += 1) html += "<span>" + i + "</span>";
-          reel.innerHTML = html;
-          digit.appendChild(reel);
-          wrap.appendChild(digit);
-          return;
-        }
-        var mark = document.createElement("span");
-        mark.className = "cs-ticker-char";
-        mark.textContent = ch;
-        wrap.appendChild(mark);
-      });
-
-      el.appendChild(wrap);
-      return true;
-    }
-
-    function spin(card) {
-      if (!card || card.classList.contains("is-ticking")) return;
-      card.classList.add("is-ticking");
-      card.querySelectorAll(".cs-ticker-reel").forEach(function (reel, index) {
-        var digit = parseInt(reel.getAttribute("data-digit"), 10);
-        reel.style.transitionDelay = index * 70 + "ms";
-        requestAnimationFrame(function () {
-          reel.style.transform = "translateY(-" + (10 + digit) + "em)";
-        });
-      });
-    }
-
-    function enhance() {
-      document.querySelectorAll(".cs-stats .cs-stat-value").forEach(buildTicker);
-    }
-
-    enhance();
-    window.setTimeout(enhance, 400);
-
-    var panels = document.querySelectorAll(".cs-stats");
-    if (!panels.length) return;
-
-    if (reduce || !("IntersectionObserver" in window)) {
-      document.querySelectorAll(".cs-stats .cs-stat-card").forEach(spin);
-      return;
-    }
-
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.querySelectorAll(".cs-stat-card").forEach(function (card, index) {
-          window.setTimeout(function () { spin(card); }, index * 90);
-        });
-        io.unobserve(entry.target);
-      });
-    }, { threshold: 0.25, rootMargin: "0px 0px -8% 0px" });
-
-    panels.forEach(function (panel) { io.observe(panel); });
-  })();
 })();
