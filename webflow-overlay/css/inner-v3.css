@@ -908,7 +908,7 @@ html:not([data-wf-page="6a0ed15ae72ebfcd1bcbad35"]) .hero:not(:has(.hero-gradien
 
     .hero .image-7[data-reveal].is-in:hover,
     .hero-visual-1[data-reveal].is-in:hover {
-      transform: translateY(-6px);
+      /* transform: translateY(-6px); */
     }
   }
 }
