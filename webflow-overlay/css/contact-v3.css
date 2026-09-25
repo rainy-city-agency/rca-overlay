@@ -109,8 +109,12 @@
 
 .contact-field {
   position: relative;
-  opacity: 0;
   --reveal-delay: 0ms;
+}
+
+/* FADE-UP — comment back in to restore
+.contact-field {
+  opacity: 0;
 }
 
 .contact-field.is-in {
@@ -127,6 +131,7 @@
     transform: none;
   }
 }
+*/
 
 .contact-input,
 .contact-area {
@@ -655,6 +660,7 @@
   color: var(--text--secondary);
 }
 
+/* FADE-UP — comment back in to restore
 .contact-card.is-success .contact-done h2 {
   animation: inner-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
 }
@@ -662,6 +668,7 @@
 .contact-card.is-success .contact-done p {
   animation: inner-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.58s both;
 }
+*/
 
 .contact-burst {
   position: absolute;
@@ -713,6 +720,7 @@
   transform-origin: left center;
 }
 
+/* FADE-UP — comment back in to restore
 .contact-stat[data-reveal].is-in {
   animation: contact-stat-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms) both;
 }
@@ -727,6 +735,7 @@
     transform: none;
   }
 }
+*/
 
 .contact-stat-kicker {
   margin: 0 0 6px;
