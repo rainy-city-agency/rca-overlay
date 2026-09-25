@@ -212,7 +212,7 @@ html:not([data-wf-page="6a0ed15ae72ebfcd1bcbad35"]) .hero:not(:has(.hero-gradien
 .hero-proof-1,
 .insights-hero-intro,
 .inner-lede {
-  animation: hero-motion-blur-soft 1.35s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both;
+  /* animation: hero-motion-blur-soft 1.35s cubic-bezier(0.16, 1, 0.3, 1) 0.42s both; */
 }
 
 @keyframes hero-motion-blur {
