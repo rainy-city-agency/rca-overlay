@@ -222,7 +222,7 @@ html:not([data-wf-page="6a0ed15ae72ebfcd1bcbad35"]) .hero:not(:has(.hero-gradien
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  filter: blur(90px);
+  /* filter: blur(90px); */
 }
 
 .hp-organic-blob {
@@ -978,11 +978,11 @@ html:not([data-wf-page="6a0ed15ae72ebfcd1bcbad35"]) .hero:not(:has(.hero-gradien
   .process-steps .process-step .step-line,
   .hp-organic-blob,
   .cs-ticker-reel {
-    animation: none;
+    /* animation: none;
     opacity: 1;
     filter: none;
     transform: none;
-    transition: none;
+    transition: none; */
   }
 }
 
