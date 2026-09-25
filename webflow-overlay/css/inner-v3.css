@@ -471,6 +471,9 @@ html:not([data-wf-page="6a0ed15ae72ebfcd1bcbad35"]) .hero:not(:has(.hero-gradien
   margin-bottom: 0;
 }
 
+[data-reveal]{
+  opacity: 1}
+
 /* FADE-UP REVEALS — comment back in to restore
 [data-reveal] {
   opacity: 0;
