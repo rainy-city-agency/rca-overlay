@@ -375,37 +375,37 @@
     watch.observe(card, { attributes: true, attributeFilter: ["class"] });
   });
 
-  function splitHeroBlurTitle(title) {
-    if (title.getAttribute("data-hero-blur") === "1") return;
-    title.setAttribute("data-hero-blur", "1");
-    title.classList.add("hero-blur-title");
-    var walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT, null);
-    var nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    var index = 0;
-    nodes.forEach(function (node) {
-      var text = node.nodeValue;
-      if (!text || !text.trim()) return;
-      var frag = document.createDocumentFragment();
-      text.split(/(\s+)/).forEach(function (chunk) {
-        if (!chunk) return;
-        if (/^\s+$/.test(chunk)) {
-          frag.appendChild(document.createTextNode(chunk));
-          return;
-        }
-        var outer = document.createElement("span");
-        outer.className = "hero-blur-word";
-        outer.style.setProperty("--blur-i", String(index));
-        index += 1;
-        var inner = document.createElement("span");
-        inner.className = "hero-blur-word-inner";
-        inner.textContent = chunk;
-        outer.appendChild(inner);
-        frag.appendChild(outer);
-      });
-      node.parentNode.replaceChild(frag, node);
-    });
-  }
+  // function splitHeroBlurTitle(title) {
+  //   if (title.getAttribute("data-hero-blur") === "1") return;
+  //   title.setAttribute("data-hero-blur", "1");
+  //   title.classList.add("hero-blur-title");
+  //   var walker = document.createTreeWalker(title, NodeFilter.SHOW_TEXT, null);
+  //   var nodes = [];
+  //   while (walker.nextNode()) nodes.push(walker.currentNode);
+  //   var index = 0;
+  //   nodes.forEach(function (node) {
+  //     var text = node.nodeValue;
+  //     if (!text || !text.trim()) return;
+  //     var frag = document.createDocumentFragment();
+  //     text.split(/(\s+)/).forEach(function (chunk) {
+  //       if (!chunk) return;
+  //       if (/^\s+$/.test(chunk)) {
+  //         frag.appendChild(document.createTextNode(chunk));
+  //         return;
+  //       }
+  //       var outer = document.createElement("span");
+  //       outer.className = "hero-blur-word";
+  //       outer.style.setProperty("--blur-i", String(index));
+  //       index += 1;
+  //       var inner = document.createElement("span");
+  //       inner.className = "hero-blur-word-inner";
+  //       inner.textContent = chunk;
+  //       outer.appendChild(inner);
+  //       frag.appendChild(outer);
+  //     });
+  //     node.parentNode.replaceChild(frag, node);
+  //   });
+  // }
 
   document.querySelectorAll(
     ".hero-content[data-reveal], .hero-content-1[data-reveal], .contact-hero-content[data-reveal], .insights-hero-title-block[data-reveal], .inner-hero-copy"
