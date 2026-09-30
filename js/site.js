@@ -3,7 +3,76 @@
 
   var header = document.querySelector(".nav-fixed");
   var toggle = document.querySelector(".nav-toggle");
-  var drawer = document.querySelector(".nav-drawer");
+  var drawer = document.querySelector(".nav-drawer");.hp-statement {
+  padding: 0;
+  background: #fff;
+}
+
+.hp-statement.is-pinned {
+  height: 320vh;
+}
+
+.hp-statement-viewport {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: none;
+  margin: 0;
+  min-height: 100vh;
+  padding: 0 var(--grid--margin-desktop);
+}
+
+.hp-statement.is-pinned .hp-statement-viewport {
+  position: sticky;
+  top: 0;
+}
+
+.hp-statement-track {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: min(1100px, 100%);
+}
+
+.hp-statement-item {
+  grid-area: 1 / 1;
+  font-family: var(--font--instrument-serif);
+  color: var(--text--primary);
+  text-align: center;
+  font-size: clamp(32px, 4.2vw, 56px);
+  line-height: 1.2;
+  margin: 0 auto;
+  max-width: 16ch;
+  opacity: 0.28;
+  filter: blur(12px);
+  transform: translateX(-32%);
+  transition:
+    opacity 0.55s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.55s ease;
+  pointer-events: none;
+}
+
+.hp-statement-item.is-next {
+  transform: translateX(32%);
+}
+
+.hp-statement-item.is-active {
+  opacity: 1;
+  filter: none;
+  transform: none;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-statement-item,
+  .hp-statement-item.is-active,
+  .hp-statement-item.is-next {
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}
   if (header && toggle && drawer) {
     toggle.addEventListener("click", function () {
       var open = header.classList.toggle("is-open");
@@ -242,14 +311,14 @@
 
   var splt = document.querySelector(".splt-section");
   if (splt) {
-    var wrap = splt.querySelector(".splt-tabs");
+    var wrap = splt.querySelector(".s");
     var pillTab = splt.querySelector(".splt-tab-pill");
     if (wrap && !pillTab) {
       pillTab = document.createElement("div");
       pillTab.className = "splt-tab-pill";
       wrap.insertBefore(pillTab, wrap.firstChild);
     }
-    var tabs = Array.prototype.slice.call(splt.querySelectorAll(".splt-tab"));
+    var tabs = Array.prototype.slice.call(splt.querySelectorAll(".s"));
     var panes = splt.querySelectorAll(".splt-pane");
     if (panes[0]) panes[0].classList.add("is-active");
     var select = splt.querySelector(".splt-select");
