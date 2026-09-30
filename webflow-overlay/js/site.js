@@ -428,7 +428,7 @@
 
   var splt = document.querySelector(".splt-section");
   if (splt) {
-    var tabs = Array.prototype.slice.call(splt.querySelectorAll(".splt-tab"));
+    var tabs = Array.prototype.slice.call(splt.querySelectorAll(".s));
     var panes = splt.querySelectorAll(".splt-pane");
     if (panes[0]) panes[0].classList.add("is-active");
     var select = splt.querySelector(".splt-select");
